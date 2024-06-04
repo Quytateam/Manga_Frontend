@@ -1,0 +1,215 @@
+<div
+        id="mceu_9"
+        className="mce-tinymce mce-container mce-panel"
+        tabIndex="-1"
+        role="application"
+        style={{ visibility: "hidden", borderWidth: "1px" }}
+      >
+        <div id="mceu_9-body" className="mce-container-body mce-stack-layout">
+          <div
+            id="mceu_10"
+            className="mce-toolbar-grp mce-container mce-panel mce-stack-layout-item mce-first"
+            tabIndex="-1"
+            role="group"
+          >
+            <div
+              id="mceu_10-body"
+              className="mce-container-body mce-stack-layout"
+            >
+              <div
+                id="mceu_11"
+                className="mce-container mce-toolbar mce-stack-layout-item mce-first mce-last"
+                role="toolbar"
+              >
+                <div
+                  id="mceu_11-body"
+                  className="mce-container-body mce-flow-layout"
+                >
+                  <div
+                    id="mceu_12"
+                    className="mce-container mce-flow-layout-item mce-first mce-last mce-btn-group"
+                    role="group"
+                  >
+                    <div id="mceu_12-body">
+                      {/* Buttons for icons */}
+                      <button
+                        className="mce-widget mce-btn mce-first"
+                        aria-label="Troll Face"
+                        tabIndex="-1"
+                      >
+                        <i className="mce-ico mce-i-emotrollface"></i> Troll
+                        Face
+                      </button>
+                      <button
+                        className="mce-widget mce-btn"
+                        aria-label="Onion"
+                        tabIndex="-1"
+                      >
+                        <i className="mce-ico mce-i-emoonion"></i> Onion
+                      </button>
+                      <button
+                        className="mce-widget mce-btn"
+                        aria-label="Bafu"
+                        tabIndex="-1"
+                      >
+                        <i className="mce-ico mce-i-emobafu"></i> Bafu
+                      </button>
+                      <button
+                        className="mce-widget mce-btn"
+                        aria-label="Thỏ bựa"
+                        tabIndex="-1"
+                      >
+                        <i className="mce-ico mce-i-emothobua"></i> Thỏ bựa
+                      </button>
+                      <button
+                        className="mce-widget mce-btn"
+                        aria-label="Thỏ tuzki"
+                        tabIndex="-1"
+                      >
+                        <i className="mce-ico mce-i-emothotuzki"></i> Thỏ tuzki
+                      </button>
+                      <button
+                        className="mce-widget mce-btn"
+                        aria-label="Khỉ yoyo"
+                        tabIndex="-1"
+                      >
+                        <i className="mce-ico mce-i-emoyoyo"></i> Khỉ yoyo
+                      </button>
+                      <button
+                        className="mce-widget mce-btn"
+                        aria-label="Gấu panda"
+                        tabIndex="-1"
+                      >
+                        <i className="mce-ico mce-i-emopanda"></i> Gấu panda
+                      </button>
+                      <button
+                        className="mce-widget mce-btn"
+                        aria-label="Baby Soldier"
+                        tabIndex="-1"
+                      >
+                        <i className="mce-ico mce-i-emobabysoldier"></i> Baby
+                        Soldier
+                      </button>
+                      <button
+                        className="mce-widget mce-btn mce-last"
+                        aria-label="Emo gif"
+                        tabIndex="-1"
+                      >
+                        <i className="mce-ico mce-i-emogif"></i> Emo gif
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            id="mceu_13"
+            className="mce-edit-area mce-container mce-panel mce-stack-layout-item mce-last"
+            tabIndex="-1"
+            role="group"
+            style={{ borderWidth: "1px 0px 0px" }}
+          >
+            {/* Textarea for content */}
+            <iframe
+              id="comment_content_ifr"
+              frameborder="0"
+              allowtransparency="true"
+              title="Rich Text Area. Press ALT-F9 for menu. Press ALT-F10 for toolbar. Press ALT-0 for help"
+              // src='javascript:""'
+              style={{ width: "100%", height: "100px", display: "block" }}
+            >
+              <div style={{ overflowY: "hidden" }}>
+                <style>
+                  {`
+          .mce-content-body div.mce-resizehandle {
+            position: absolute;
+            border: 1px solid black;
+            background: #FFF;
+            width: 7px;
+            height: 7px;
+            z-index: 10000;
+          }
+          .mce-content-body .mce-resizehandle:hover {
+            background: #000;
+          }
+          .mce-content-body img[data-mce-selected],
+          .mce-content-body hr[data-mce-selected] {
+            outline: 1px solid black;
+            resize: none;
+          }
+          .mce-content-body .mce-clonedresizable {
+            position: absolute;
+            outline: 1px dashed black;
+            opacity: 0.5;
+            filter: alpha(opacity=50);
+            z-index: 10000;
+          }
+          .mce-content-body .mce-resize-helper {
+            background: #555;
+            background: rgba(0, 0, 0, 0.75);
+            border-radius: 3px;
+            border: 1px;
+            color: white;
+            display: none;
+            font-family: sans-serif;
+            font-size: 12px;
+            white-space: nowrap;
+            line-height: 14px;
+            margin: 5px 10px;
+            padding: 5px;
+            position: absolute;
+            z-index: 10001;
+          }
+          .mce-visual-caret {
+            position: absolute;
+            background-color: black;
+            background-color: currentcolor;
+          }
+          .mce-visual-caret-hidden {
+            display: none;
+          }
+          *[data-mce-caret] {
+            position: absolute;
+            left: -1000px;
+            right: auto;
+            top: 0;
+            margin: 0;
+            padding: 0;
+          }
+          .mce-content-body .mce-offscreen-selection {
+            position: absolute;
+            left: -9999999999px;
+            width: 100px;
+            height: 100px;
+          }
+          .mce-content-body *[contentEditable=false] {
+            cursor: default;
+          }
+          .mce-content-body *[contentEditable=true] {
+            cursor: text;
+          }
+        `}
+                </style>
+                <div
+                  id="tinymce"
+                  className="mce-content-body"
+                  data-id="comment_content"
+                  contentEditable={true}
+                  spellCheck={false}
+                  style={{
+                    overflowY: "hidden",
+                    fontSize: "16px",
+                    paddingLeft: "1px",
+                    paddingRight: "1px",
+                    paddingBottom: "0px",
+                  }}
+                  data-mce-style="overflow-y: auto; font-size: 16px; padding-left: 1px; padding-right: 1px; padding-bottom: 0px;"
+                >
+                  <br data-mce-bogus="1" />
+                </div>
+              </div>
+            </iframe>
+          </div>
+        </div>
+      </div>

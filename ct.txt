@@ -1,0 +1,4 @@
+sử dụng
+res.status(401);
+      throw new Error("Mật khẩu cũ không đúng");
+thì không cần const errorMessage = error.response.data.error;

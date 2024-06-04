@@ -1,0 +1,23 @@
+/* style.css */
+
+/* Bootstrap */
+/* @import "~bootstrap/dist/css/bootstrap.min.css"; */
+
+/* Font Awesome */
+/* @import "~font-awesome/css/font-awesome.min.css"; */
+/* Bootstrap */
+/* @import url("../../../../Content2/bootstrap.min.css"); */
+/* Chỉ có font-awesime vaf web-icons là không đổi */
+@import url("../../../../Content2/remark/bootstrap-extend.min.css");
+
+@import url("../../../../Content2/remark/site.min.css");
+
+@import url("../../../../Content2/remark/animsition/animsition.css");
+
+@import url("../../../../Content2/remark/asscrollable/asScrollable.css");
+
+@import url("../../../../Content2/font-awesome.min.css");
+
+@import url("../../../../Content2/admin.css");
+
+@import url("../../../../Content2/remark/web-icons/web-icons.min.css");

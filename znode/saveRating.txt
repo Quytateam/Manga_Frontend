@@ -1,0 +1,95 @@
+import React, { useState, useEffect } from "react";
+import { FaRegStar, FaStar, FaStarHalfAlt } from "react-icons/fa";
+
+function Rating({ rate }) {
+  const [rating, setRating] = useState(rate);
+  const [hoveredRating, setHoveredRating] = useState(0);
+  useEffect(() => {
+    setRating(rate);
+  }, [rate]);
+
+  const handleMouseOver = (hoveredStar) => {
+    console.log(hoveredStar);
+    setHoveredRating(hoveredStar);
+  };
+
+  const handleMouseLeave = () => {
+    setHoveredRating(rate);
+  };
+
+  const handleClick = (clickedStar) => {
+    const newRating = getRoundedRating(clickedStar);
+    console.log(newRating);
+    // setRating(newRating);
+    // if (onRatingChange) {
+    //   onRatingChange(newRating);
+    // }
+  };
+  const getRoundedRating = (value) => {
+    if (value % 1 === 0 || value % 1 === 0.5) {
+      return value;
+    } else {
+      return Math.floor(value) + 0.5;
+    }
+  };
+  const renderStar = (starNumber) => {
+    if (starNumber <= (hoveredRating || rating)) {
+      if (starNumber <= rating) {
+        return <FaStar key={starNumber} className="star filled" />;
+      } else {
+        return <FaStarHalfAlt key={starNumber} className="star half-filled" />;
+      }
+    } else {
+      return <FaRegStar key={starNumber} className="star" />;
+    }
+  };
+  const handleRating = () => {
+    // Xử lý logic khi người dùng click để đánh giá sao
+    // console.log(`Bạn đã đánh giá ${rating} sao cho manga có ID là ${id}`);
+  };
+  return (
+    <div className="row rating">
+      <div className="col-xs-6">
+        <div
+          className="star"
+          data-rating={rate}
+          data-allowrating="true"
+          style={{ cursor: "pointer" }}
+          onClick={handleRating}
+        >
+          <img
+            src="//st.nhattruyenss.com/Data/Sites/1/skins/comic/images/star-on.png"
+            alt="1"
+            title="bad"
+          />
+          {/* {[...Array(5)].map((_, index) => {
+            const starNumber = index + 1;
+            return (
+              <span
+                key={starNumber}
+                onMouseOver={() => handleMouseOver(starNumber)}
+                onMouseLeave={handleMouseLeave}
+                onClick={() => handleClick(starNumber)}
+              >
+                {renderStar(starNumber)}
+              </span>
+              //   <input
+              //     type="radio"
+              //     name="rating"
+              //     value={starNumber}
+              //     onMouseOver={() => handleMouseOver(starNumber)}
+              //     onMouseLeave={handleMouseLeave}
+              //     onClick={() => handleClick(starNumber)}
+              //     checked={starNumber === rating}
+              //     className="star-input"
+              //   />
+            );
+          })} */}
+          <input type="hidden" name="score" value={rate} />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default Rating;

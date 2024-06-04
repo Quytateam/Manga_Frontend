@@ -1,0 +1,64 @@
+import React from "react";
+import Layout from "../Layout/Layout";
+import { NavLink, useParams } from "react-router-dom";
+import FeaturedTitles from "../Components/Home/FeaturedTitles";
+import { MangaData } from "../Data/MangaData";
+import TopTitles from "../Components/Home/TopTitles";
+import GenderManga from "../Components/Home/GenderManga";
+
+function GenderMangaPage() {
+  const { gender } = useParams();
+  return (
+    <Layout>
+      <div id="ctl00_Breadcrumbs_pnlWrapper">
+        <ul className="breadcrumb" itemType="http://schema.org/BreadcrumbList">
+          <li itemProp="itemListElement" itemType="http://schema.org/ListItem">
+            <NavLink
+              to="/"
+              className="itemcrumb"
+              itemProp="item"
+              itemType="http://schema.org/Thing"
+            >
+              <span itemProp="name">Trang chủ</span>
+            </NavLink>
+            <meta itemProp="position" content={"1"} />
+          </li>
+          <li itemProp="itemListElement" itemType="http://schema.org/ListItem">
+            <NavLink
+              to={
+                gender === "truyen-con-gai"
+                  ? "/truyen-con-gai"
+                  : "/truyen-con-trai"
+              }
+              className="itemcrumb active"
+              itemProp="item"
+              itemType="http://schema.org/Thing"
+            >
+              <span itemProp="name">
+                {gender === "truyen-con-gai" ? "Con gái" : "Con trai"}
+              </span>
+            </NavLink>
+            <meta itemProp="position" content={"2"} />
+          </li>
+        </ul>
+      </div>
+      <FeaturedTitles mangas={MangaData} />
+      <div className="row">
+        <div id="ctl00_divCenter" className="center-side col-md-8">
+          <GenderManga
+            mangas={MangaData}
+            title={
+              gender === "truyen-con-gai" ? "Truyện con gái" : "Truyện con trai"
+            }
+            gender={gender}
+          />
+        </div>
+        <div className="right-side col-md-4 cmszone" id="ctl00_divRight">
+          <TopTitles />
+        </div>
+      </div>
+    </Layout>
+  );
+}
+
+export default GenderMangaPage;

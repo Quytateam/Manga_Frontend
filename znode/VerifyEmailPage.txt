@@ -1,0 +1,113 @@
+import React, { useState } from "react";
+import Layout from "../Layout/Layout";
+import { Link } from "react-router-dom";
+
+function VerifyEmailPage() {
+  const [opt, setOpt] = useState(new Array(6).fill(""));
+
+  const handleChange = (index, e) => {
+    if (isNaN(e.target.value)) return false;
+    setOpt([
+      ...opt.map((data, indx) => (indx === index ? e.target.value : data)),
+    ]);
+
+    // Chuyển đến ô nhập tiếp theo nếu có giá trị và không phải ô cuối cùng
+    if (e.target.value && index < opt.length - 1) {
+      const nextInput = document.getElementById(`code-input-${index + 1}`);
+      if (nextInput) nextInput.focus();
+    }
+  };
+
+  const handleKeyDown = (index, e) => {
+    if (e.key === "Backspace" && index > 0 && !e.target.value) {
+      const prevInput = document.getElementById(`code-input-${index - 1}`);
+      if (prevInput) prevInput.focus();
+    }
+  };
+
+  const handleClick = (index) => {
+    const currentInput = document.getElementById(`code-input-${index}`);
+    if (currentInput === document.activeElement || opt[index] !== "") {
+      console.log(`Clicked on input ${index}`);
+      // Thực hiện hành động cần thiết khi click vào ô đang tập trung vào hoặc có giá trị
+    }
+  };
+
+  const handleKeyUp = () => {
+    const code = opt.join("");
+    console.log("Entered code:", code);
+  };
+  return (
+    <Layout>
+      <div className="row">
+        <div id="ctl00_divCenter" className="full-width col-sm-12">
+          <div id="ctl00_mainContent_pnlLogin">
+            <div
+              id="ctl00_mainContent_pnlStandardLogin"
+              className="login-wrapper"
+            >
+              <div className="row">
+                <div className="col-sm-offset-2 col-sm-8">
+                  <div className="user-page clearfix">
+                    <h1 className="text-center">Verify your email address</h1>
+                    <div className="code-section">
+                      {opt.map((data, index) => (
+                        <div className="code-box" key={index}>
+                          <span className="code-number">
+                            <input
+                              id={`code-input-${index}`}
+                              className="max-w-10 code-input"
+                              type="text"
+                              maxLength="1"
+                              value={data}
+                              onChange={(e) => handleChange(index, e)}
+                              onKeyDown={(e) => handleKeyDown(index, e)}
+                              onKeyUp={handleKeyUp}
+                            />
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="footer-container">
+                      <span>
+                        Make sure to keep this window open while check your
+                        inbox.
+                        <Link to="#">Resend code</Link>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Layout>
+  );
+}
+
+export default VerifyEmailPage;
+
+
+
+const handleChange = (index, e) => {
+    if (isNaN(e.target.value)) return false;
+    setOtp([
+      ...otp.map((data, indx) => (indx === index ? e.target.value : data)),
+    ]);
+
+    // Chuyển đến ô nhập tiếp theo nếu có giá trị và không phải ô cuối cùng
+    if (e.target.value && index < otp.length - 1) {
+      const nextInput = document.getElementById(`code-input-${index + 1}`);
+      if (nextInput) nextInput.focus();
+    } else if (index === otp.length - 1) {
+      // Nếu đây là ô cuối cùng, và người dùng nhập giá trị vào ô này, thực hiện console.log
+      console.log("Entered code:", otp.join(""));
+      dispatch(
+        verifyEmailAction({
+          userId: userInfo?._id,
+          OTP: otp.join(""),
+        })
+      );
+    }
+  };

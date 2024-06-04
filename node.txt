@@ -1,0 +1,10 @@
+// ws.current.connect();
+        // const ws = new WebSocket(
+        //   `ws://localhost:5000?token=${encodeURIComponent(userInfo?.token)}`
+        // );
+        // console.log(ws)
+
+// if (!ws.current) {
+    //   ws.current = new WebSocketManager();
+    // }
+    // const name = manganame.substring(0, manganame.lastIndexOf("-"));

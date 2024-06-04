@@ -1,0 +1,28 @@
+{/* <div className="suggestion-auto">
+        <div className="form-control-auto">
+          <input
+            className="form-control"
+            placeholder={pholder}
+            type="search"
+            value={selectedVal}
+            onChange={handleChange}
+            onKeyUp={handler}
+          />
+        </div>
+
+        <div
+        className="suggestions"
+        style={{ display: isHideSuggs ? "none" : "block" }}
+      >
+        {suggestions.map((item, idx) => (
+          <div
+            key={item._id}
+            onClick={() => {
+              hideSuggs(item);
+            }}
+          >
+            {item.title}
+          </div>
+        ))}
+      </div>
+      </div> */}

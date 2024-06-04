@@ -1,0 +1,437 @@
+import React, { useState, useEffect, useMemo } from "react";
+import Layout from "../Layout/Layout";
+import { Link, useLocation } from "react-router-dom";
+// import routes from "../routes.ts";
+import ASearchMangaForm from "../Components/Home/ASearchMangaForm.js";
+
+function ASearchPage() {
+  const location = useLocation();
+  const queryParams = useMemo(
+    () => new URLSearchParams(location.search),
+    [location.search]
+  );
+  const [isCollapsed, setIsCollapsed] = useState(true);
+  const [formDataReady, setFormDataReady] = useState(false);
+  const [formData, setFormData] = useState({
+    genres: "",
+    notgenres: "",
+    gender: "-1",
+    status: "-1",
+    minchapter: "1",
+    sort: "0",
+  });
+  const toggleCollapse = () => {
+    setIsCollapsed(!isCollapsed);
+  };
+  useEffect(() => {
+    console.log("222");
+    setIsCollapsed(location.search ? false : true);
+    const fetchedFormData = {
+      genres: queryParams.get("genres") || "",
+      notgenres: queryParams.get("notgenres") || "",
+      gender: queryParams.get("gender") || "-1",
+      status: queryParams.get("status") || "-1",
+      minchapter: queryParams.get("minchapter") || "1",
+      sort: queryParams.get("sort") || "0",
+    };
+    setFormData(fetchedFormData);
+    setFormDataReady(true);
+  }, [location.search, queryParams]);
+  return (
+    <Layout>
+      <div id="ctl00_Breadcrumbs_pnlWrapper">
+        <ul className="breadcrumb" itemType="http://schema.org/BreadcrumbList">
+          <li itemProp="itemListElement" itemType="http://schema.org/ListItem">
+            <Link
+              to="/"
+              className="itemcrumb"
+              itemProp="item"
+              itemType="http://schema.org/Thing"
+            >
+              <span itemProp="name">Trang chủ</span>
+            </Link>
+            <meta itemProp="position" content={"1"} />
+          </li>
+          <li itemProp="itemListElement" itemType="http://schema.org/ListItem">
+            <Link
+              to="/tim-truyen-nang-cao"
+              className="itemcrumb active"
+              itemProp="item"
+              itemType="http://schema.org/Thing"
+            >
+              <span itemProp="name">Tìm truyện</span>
+            </Link>
+            <meta itemProp="position" content={"2"} />
+          </li>
+        </ul>
+      </div>
+      <div className="row">
+        <div className="full-width col-sm-12">
+          <div className="Module Module-239">
+            <div className="ModuleContent">
+              <div className="notify_block">
+                <div className="info">
+                  <em className="fa fa-info-circle" />
+                </div>
+                Mẹo: Nếu bạn không thích thể loại Trung Quốc có thể bỏ check{" "}
+                <span className="icon-cross"> </span> Harem.{" "}
+                <span style={{ color: "#ff0000" }}>Nhấn 2 lần để bỏ check</span>
+              </div>
+            </div>
+          </div>
+          <div className="Module Module-222">
+            <div className="ModuleContent">
+              <div className="comic-filter mrb10">
+                <h1 className="text-center">Tìm truyện nâng cao</h1>
+              </div>
+              <div className="text-center mrb5">
+                <button
+                  type="button"
+                  className="btn btn-info btn-collapse"
+                  onClick={toggleCollapse}
+                >
+                  <span className={`show-text ${isCollapsed ? "hidden" : ""}`}>
+                    Hiện{" "}
+                  </span>
+                  <span className={`hide-text ${isCollapsed ? "" : "hidden"}`}>
+                    Ẩn{" "}
+                  </span>
+                  khung tìm kiếm{" "}
+                  <i
+                    className={`fa ${
+                      isCollapsed
+                        ? "fa-angle-double-down"
+                        : "fa-angle-double-up"
+                    }`}
+                  />
+                </button>
+              </div>
+              {formDataReady && (
+                <ASearchMangaForm
+                  isCollapsed={isCollapsed}
+                  formData={formData}
+                />
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </Layout>
+  );
+}
+
+export default ASearchPage;
+
+
+******************************************************************
+import React, { useEffect } from "react";
+import { GenresData } from "../../Data/GenresData";
+import { SortData } from "../../Data/SortData";
+import { useForm, Controller } from "react-hook-form";
+import { Link, useNavigate } from "react-router-dom";
+import { StatusData } from "../../Data/StatusData";
+import { SortNumData } from "../../Data/SortNumData";
+import { GenderData } from "../../Data/GenderData";
+import Select from "react-select";
+
+const selectStyles = {
+  control: (styles) => ({ ...styles }),
+  option: (styles, { data, isDisabled, isFocused, isSelected }) => ({
+    ...styles,
+    color: "black",
+    // Bỏ comment các dòng sau nếu cần áp dụng logic màu sắc động
+    // backgroundColor: isDisabled
+    //   ? undefined
+    //   : isSelected
+    //   ? data.color
+    //   : isFocused
+    //   ? "rgba(0, 0, 0, 0.1)"
+    //   : undefined,
+  }),
+};
+
+function ASearchMangaForm({ isCollapsed, formData }) {
+  const navigate = useNavigate();
+  const {
+    // register,
+    handleSubmit,
+    watch,
+    // formState: { errors },
+    setValue,
+    control,
+    reset,
+  } = useForm({
+    defaultValues: formData,
+  });
+  const { genres, notgenres, gender, status, minchapter, sort } = formData;
+  const onSubmit = (data) => {
+    console.log(data);
+    const genres = data.includedGenres || "";
+    const notgenres = data.excludedGenres || "";
+    const gender = data.gender?.value || "-1";
+    const status = data.status?.value || "-1";
+    const minchapter = data.minchapter?.value || "1";
+    const sort = data.sort?.value || "0";
+    const url = `/tim-truyen-nang-cao?genres${genres}=&notgenres${notgenres}=&gender=${gender}&status=${status}&minchapter=${minchapter}&sort=${sort}`;
+    console.log(url);
+    // navigate(
+    //   `/tim-truyen-nang-cao?genres=${genres}&notgenres=${notgenres}&gender=${gender}&status=${status}&minchapter=${minchapter}&sort=${sort}`
+    // );
+  };
+
+  const values = watch();
+  const getStateTag = (genre) => {
+    if (values.includedGenres?.includes(genre._id)) return 1;
+    if (values.excludedGenres?.includes(genre._id)) return -1;
+    return 0;
+  };
+  const getCheckboxIcon = (state) => {
+    switch (state) {
+      case 1:
+        return "icon-tick";
+      case 0:
+        return "icon-checkbox";
+      default:
+        return "icon-cross";
+    }
+  };
+  const updateStateTag = (genre) => {
+    const currentStateTag = getStateTag(genre);
+    switch (currentStateTag) {
+      case 1:
+        setValue(
+          "includedGenres",
+          values.includedGenres?.filter((t) => t !== genre._id) || []
+        );
+        setValue("excludedGenres", [
+          ...(values.excludedGenres || []),
+          genre._id,
+        ]);
+        break;
+      case 0:
+        setValue("includedGenres", [
+          ...(values.includedGenres || []),
+          genre._id,
+        ]);
+        break;
+      default:
+        setValue(
+          "includedGenres",
+          values.includedGenres?.filter((t) => t !== genre._id) || []
+        );
+        setValue(
+          "excludedGenres",
+          values.excludedGenres?.filter((t) => t !== genre._id) || []
+        );
+        break;
+    }
+  };
+
+  const handleReset = () => {
+    reset(formData); // Đặt lại giá trị mặc định từ props formData
+  };
+
+  useEffect(() => {
+    console.log("111");
+    console.log(gender);
+  }, [formData, gender]);
+  return (
+    <>
+      <form
+        // className={isCollapsed ? "" : "hidden"}
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        <div className="advsearch-form">
+          <div className="form-group clearfix">
+            <p className="mrb5">
+              <span className="icon-tick"></span> Tìm trong những thể loại này
+            </p>
+            <p className="mrb5">
+              <span className="icon-cross"></span> Loại trừ những thể loại này
+            </p>
+            <p className="mrb5">
+              <span className="icon-checkbox"></span> Truyện có thể thuộc hoặc
+              không thuộc thể loại này
+              <Link
+                className="btn btn-primary btn-sm pull-right btn-reset"
+                to="/tim-truyen-nang-cao"
+                onClick={() => handleReset}
+              >
+                <i className="fa fa-refresh" /> Reset
+              </Link>
+            </p>
+          </div>
+          {/* <div className="form-group clearfix">
+            <label className="col-sm-2 control-label mrt5 mrt5">Tựa đề</label>
+            <input
+              className="form-control"
+              // {...register("title")}
+            />
+          </div> */}
+          <div className="form-group clearfix">
+            <label className="col-sm-2 control-label mrt5 mrt5">Thể loại</label>
+            <div className="col-sm-10">
+              <div className="row">
+                {GenresData.map((genre) => {
+                  const state = getStateTag(genre);
+                  return (
+                    <div
+                      className="col-md-3 col-sm-4 col-xs-6 mrb10 cursor-pointer"
+                      key={genre._id}
+                      onClick={() => updateStateTag(genre)}
+                    >
+                      <div className="genre-item" title={genre.title}>
+                        <span
+                          className={getCheckboxIcon(state)}
+                          data-id={genre._id}
+                        ></span>
+                        {genre.title}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+          <div className="form-group clearfix">
+            <div className="col-sm-2 control-label mrt5">
+              <label htmlFor="status">Số lượng chapter</label>
+            </div>
+            <div className="col-sm-4">
+              {/* <Controller
+                control={control}
+                name="minchapter"
+                defaultValue={{ value: prop.minchapter }}
+                render={({ field: { onChange, onBlur, name, ref } }) => (
+                  <Select
+                    defaultValue={SortNumData.find(
+                      (item) => item.value === prop.minchapter
+                    )}
+                    className="basic-single select-sort"
+                    classNamePrefix="select"
+                    options={SortNumData.map((n) => ({
+                      value: n.value,
+                      label: n.label,
+                    }))}
+                    onChange={(newValue) => {
+                      onChange(newValue ? newValue : null);
+                    }}
+                    isSearchable={false}
+                    name={name}
+                    ref={ref}
+                    onBlur={onBlur}
+                    styles={selectStyles}
+                  />
+                )}
+              /> */}
+            </div>
+            <div className="col-sm-2 control-label mrt5">
+              <label htmlFor="status">Tình trạng</label>
+            </div>
+            <div className="col-sm-4">
+              {/* <Controller
+                control={control}
+                name="status"
+                defaultValue={{ value: prop.status }}
+                render={({ field: { onChange, onBlur, name, ref } }) => (
+                  <Select
+                    defaultValue={StatusData.find(
+                      (item) => item.value === prop.status
+                    )}
+                    className="basic-single select-sort"
+                    classNamePrefix="select"
+                    options={StatusData.map((s) => ({
+                      value: s.value,
+                      label: s.label,
+                    }))}
+                    onChange={(newValue) => {
+                      onChange(newValue ? newValue : null); // Chỉ gán giá trị mới thay vì mảng giá trị
+                    }}
+                    isSearchable={false}
+                    name={name}
+                    ref={ref}
+                    onBlur={onBlur}
+                    styles={selectStyles}
+                  />
+                )}
+              /> */}
+            </div>
+          </div>
+          <div className="form-group clearfix">
+            <div className="col-sm-2 control-label mrt5">
+              <label htmlFor="status">Dành cho</label>
+            </div>
+            <div className="col-sm-4">
+              {/* <Controller
+                control={control}
+                name="gender"
+                defaultValue={{ value: prop.gender }}
+                render={({ field: { onChange, onBlur, name, ref } }) => (
+                  <Select
+                    defaultValue={GenderData.find(
+                      (item) => item.value === prop.gender
+                    )}
+                    className="basic-single select-sort"
+                    classNamePrefix="select"
+                    options={GenderData.map((g) => ({
+                      value: g.value,
+                      label: g.label,
+                    }))}
+                    onChange={(newValue) => {
+                      onChange(newValue ? newValue : null); // Chỉ gán giá trị mới thay vì mảng giá trị
+                    }}
+                    isSearchable={false}
+                    name={name}
+                    ref={ref}
+                    onBlur={onBlur}
+                    styles={selectStyles}
+                  />
+                )}
+              /> */}
+            </div>
+            <div className="col-sm-2 control-label mrt5">
+              <label htmlFor="status">Sắp xếp theo</label>
+            </div>
+            <div className="col-sm-4">
+              {/* <Controller
+                control={control}
+                name="sort"
+                defaultValue={{ value: prop.sort }}
+                render={({ field: { onChange, onBlur, name, ref } }) => (
+                  <Select
+                    defaultValue={SortData.find(
+                      (item) => item.value === prop.sort
+                    )}
+                    className="basic-single select-sort"
+                    classNamePrefix="select"
+                    options={SortData.map((s) => ({
+                      value: s.value,
+                      label: s.label,
+                    }))}
+                    onChange={(newValue) => {
+                      onChange(newValue ? newValue : null); // Chỉ gán giá trị mới thay vì mảng giá trị
+                    }}
+                    isSearchable={false}
+                    name={name}
+                    ref={ref}
+                    onBlur={onBlur}
+                    styles={selectStyles}
+                  />
+                )}
+              /> */}
+            </div>
+          </div>
+          <div className="form-group clearfix">
+            <div className="col-sm-4 col-sm-offset-2">
+              <button type="submit" className="btn btn-success btn-search">
+                Tìm kiếm
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </>
+  );
+}
+
+export default ASearchMangaForm;

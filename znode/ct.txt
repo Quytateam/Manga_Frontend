@@ -1,0 +1,175 @@
+import React from 'react';
+import { useForm, Controller } from 'react-hook-form';
+import Select from 'react-select';
+import { MangaContentRating, optionlize, parseContentRating } from './your-path-to-constants';
+
+const YourComponent = () => {
+  const { control } = useForm();
+
+  return (
+    <Controller
+      control={control}
+      name="contentRating"
+      render={({ field }) => (
+        <Select
+          options={Object.values(MangaContentRating).map(v => optionlize(v, parseContentRating))}
+          onChange={(selectedOptions) => {
+            field.onChange(selectedOptions.map(item => item.value));
+          }}
+          isMulti={true}
+          value={field.value?.map(v => optionlize(v, parseContentRating))}
+          placeholder="Tất cả"
+          styles={selectStyles}
+        />
+      )}
+    />
+  );
+};
+
+export default YourComponent;
+
+
+*******************************************
+import React from 'react';
+import { Controller } from 'react-hook-form';
+import Select from 'react-select'; // Hoặc thư viện select của bạn
+import { MangaContentRating } from 'path/to/your/enums'; // Import enum MangaContentRating
+
+const YourComponent = ({ control }) => {
+  return (
+    <Controller
+      control={control}
+      name="contentRating"
+      render={({ field: { onChange, onBlur, value, name, ref } }) => (
+        <Select
+          options={Object.values(MangaContentRating).map(v => ({
+            value: v,
+            label: optionlize(v, parseContentRating),
+          }))}
+          onChange={(newValue) => {
+            onChange(newValue.map(item => item.value));
+          }}
+          isMulti={true}
+          onBlur={onBlur}
+          value={value?.map(v => ({
+            value: v,
+            label: optionlize(v, parseContentRating),
+          }))}
+          name={name}
+          inputRef={ref} // Sử dụng inputRef thay vì ref
+          placeholder="Tất cả"
+          styles={selectStyles}
+        />
+      )}
+    />
+  );
+};
+
+export default YourComponent;
+
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import YourComponent from './YourComponent'; // Đường dẫn đến YourComponent
+
+const ParentComponent = () => {
+  const { control, handleSubmit } = useForm();
+
+  const onSubmit = (data) => {
+    console.log(data); // Xử lý dữ liệu khi submit form
+  };
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <YourComponent control={control} />
+      <button type="submit">Submit</button>
+    </form>
+  );
+};
+
+export default ParentComponent;
+
+
+
+***************TEST************************
+<Select
+                    className="basic-single"
+                    classNamePrefix="select"
+                    options={Object.values(SortNumData).map((n) => ({
+                      value: n.num,
+                      label: n.numName,
+                    }))}
+                    onChange={(newValue) => {
+                      onChange(newValue ? newValue : null); // Chỉ gán giá trị mới thay vì mảng giá trị
+                    }}
+                    isMulti={true}
+                    onBlur={onBlur}
+                    value={value ? { value: value } : null}
+                    name={name}
+                    inputRef={ref}
+                    placeholder="> 0 chapter"
+                    styles={selectStyles}
+                  />
+
+
+**************** trong func onSubmit (ASearchMangaForm.js)
+
+
+
+{
+    defaultValues: {
+      includedGenres: prop.genres ? prop.genres.split(",") : [],
+      excludedGenres: prop.notgenres ? prop.notgenres.split(",") : [],
+    },
+  }
+
+vậy từ outerHTML làm sao triển khai trong react
+triển khai trong đây
+import React, { useEffect, useRef } from "react";
+
+function CommentForm() {
+  return <div className="comment_form"></div>;
+}
+
+export default CommentForm;
+
+
+
+// console.log(e.selected !== 0);
+    // const url =
+    //   localsearch && !localsearch.includes("page=")
+    //     ? `/the-loai${localsearch}&`
+    //     : `/the-loai?`;
+    // console.log(mangas && e.selected !== 0);
+    // if (mangas && e.selected !== 0) {
+    //   navigate(`${url}page=${e.selected + 1}`);
+    // }
+    // } else {
+    //   navigate();
+    // }
+
+
+btnAction btnActionDelete
+<Link
+                        to="#"
+                        className="btn btn-danger"
+                        data-action="1"
+                        style={{ display: "inline" }}
+                        onClick={handleDeleteManga}
+                      >
+                        Xóa
+                      </Link>
+
+{/* {codes.map((code, index) => (
+                        <div className="code-box" key={index}>
+                          <span className="code-number">
+                            <input
+                              className="max-w-10 code-input"
+                              type="text"
+                              maxLength="1"
+                              value={code}
+                              onChange={(e) => handleChange(index, e)}
+                              onKeyUp={handleKeyUp}
+                            ></input>
+                          </span>
+                        </div>
+                      ))} */}
