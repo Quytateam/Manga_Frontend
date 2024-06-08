@@ -79,7 +79,7 @@ function SearchList({ mangas, page, totalMangas, selectedGenre }) {
                     <ul className="comic-item">
                       {manga?.chapter?.map((chap) => (
                         <li
-                          className="flex gap-x-1 items-center justify-between"
+                          className="chapter clearfix flex gap-x-1 items-center justify-between"
                           key={chap?._id}
                         >
                           <Link
@@ -87,7 +87,7 @@ function SearchList({ mangas, page, totalMangas, selectedGenre }) {
                               manga?.nameOnUrl
                             }/${convertToSlug(chap?.chapName)}/${chap?._id}`}
                             title={chap?.chapName}
-                            className="flex-grow text-[13px] whitespace-nowrap overflow-hidden !text-white text-ellipsis"
+                            className="flex-grow text-[13px] whitespace-nowrap overflow-hidden text-ellipsis"
                           >
                             {chap?.chapName}
                           </Link>

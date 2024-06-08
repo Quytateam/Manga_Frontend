@@ -2,7 +2,7 @@ import React from "react";
 import Layout from "../Layout/Layout";
 import HistoryList from "../Components/Home/HistoryList";
 import TopTitles from "../Components/Home/TopTitles";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 function HistoryPage() {
   // const { userInfo } = useSelector((state) => state.userLogin);
@@ -77,7 +77,7 @@ function HistoryPage() {
                   style={{ fontSize: 16, marginBottom: 15 }}
                 >
                   <li className="active">
-                    <a href="/lich-su">Theo tài khoản</a>
+                    <Link to="/lich-su">Theo tài khoản</Link>
                   </li>
                 </ul>
               </div>

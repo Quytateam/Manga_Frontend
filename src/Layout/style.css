@@ -117,6 +117,17 @@ h1 {
   margin: 0.67em 0;
 }
 
+h2 {
+  display: block;
+  font-size: 1.5em;
+  margin-block-start: 0.83em;
+  margin-block-end: 0.83em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  font-weight: bold;
+  unicode-bidi: isolate;
+}
+
 mark {
   background: #ff0;
   color: #000;
@@ -4648,7 +4659,7 @@ p {
 }
 
 .main {
-  min-height: 400px;
+  min-height: 644px;
 }
 
 .main .container {
@@ -6532,13 +6543,18 @@ p {
   margin-bottom: 6px;
 }
 
+.dark .chapter a {
+  font-size: 13px;
+  color: #fff;
+}
+
 .chapter a {
   font-size: 13px;
   color: #000;
 }
 
 .chapter a:focus,
-.chapter a:visited,
+/* .chapter a:visited, */
 a.visited {
   text-decoration: none;
   color: silver;
@@ -7779,6 +7795,14 @@ button.close {
   padding: 10px;
   margin-right: auto;
   margin-left: auto;
+}
+
+.modal .modal-content2 {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
 }
 
 .modal-content {
@@ -9215,9 +9239,9 @@ button.close {
   background-color: #0056b3;
 } */
 
-.user-page {
+/* .user-page {
   min-height: 900px;
-}
+} */
 
 .captcha label {
   font-weight: normal;
@@ -9526,9 +9550,9 @@ h1 {
 } */
 
 /* ****************PublicInfo***************** */
-.user-page {
+/* .user-page {
   min-height: 800px;
-}
+} */
 
 .user-detail .avatar {
   display: inline-block;

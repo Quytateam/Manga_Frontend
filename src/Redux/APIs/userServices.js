@@ -20,11 +20,24 @@ const logoutService = () => {
 
 // login user API call
 const loginService = async (user) => {
-  const { data } = await Axios.post("/users/login", user);
-  if (data) {
-    localStorage.setItem("userInfo", JSON.stringify(data));
+  if (user?.password) {
+    const { data } = await Axios.post("/users/login", user);
+    if (data) {
+      localStorage.setItem("userInfo", JSON.stringify(data));
+    }
+    return data;
+  } else {
+    const { data } = await Axios.post("/google/success", user);
+    if (data) {
+      localStorage.setItem("userInfo", JSON.stringify(data));
+    }
+    return data;
   }
-  return data;
+};
+
+// login user API call
+const loginGoogleService = async () => {
+  window.open("http://localhost:5000/api/google/callback", "_self");
 };
 
 // ResendEmailVerificationToken API call
@@ -100,6 +113,16 @@ const updateProfileService = async (user, token) => {
 // change password API call
 const changePasswordService = async (passwords, token) => {
   const { data } = await Axios.patch("/users/password", passwords, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return data;
+};
+
+// create password API call
+const createPasswordService = async (passwords, token) => {
+  const { data } = await Axios.patch("/users/createpassword", passwords, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -283,6 +306,7 @@ const stopCronJobService = async (token) => {
 export {
   registerService,
   logoutService,
+  loginGoogleService,
   loginService,
   resendEmailVerificationTokenService,
   verifyEmailService,
@@ -290,6 +314,7 @@ export {
   resetPasswordService,
   updateProfileService,
   changePasswordService,
+  createPasswordService,
   getFollowMangas,
   getAllFollowMangas,
   getCommentMangas,

@@ -13,6 +13,7 @@ import {
   autoTimeReadAction,
   stopCronJobAction,
 } from "../Redux/Actions/userActions";
+import ChapterControlSmall from "../Components/Chapter/ChapterControlSmall";
 
 function ReadPage() {
   const dispatch = useDispatch();
@@ -106,13 +107,18 @@ function ReadPage() {
               nextChapter={nextChapter}
             />
             <ChapterPages images={chapter?.image} />
-          </div>
-          {manga && Object.keys(manga).length > 0 && (
-            <CommentList
-              manganame={manga?.nameOnUrl || oldManga?.nameOnUrl}
-              chapter={chapter}
+            <ChapterControlSmall
+              manga={manga || oldManga}
+              prevChapter={prevChapter}
+              nextChapter={nextChapter}
             />
-          )}
+            {manga && Object.keys(manga).length > 0 && (
+              <CommentList
+                manganame={manga?.nameOnUrl || oldManga?.nameOnUrl}
+                chapter={chapter}
+              />
+            )}
+          </div>
         </div>
       </div>
     </Layout>

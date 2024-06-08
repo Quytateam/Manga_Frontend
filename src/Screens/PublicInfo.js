@@ -79,12 +79,12 @@ function PublicInfo() {
                 </div>
                 <div className="nav nav-tabs main-tab mrt20 mrb20">
                   <li className={`${isDefault ? "active" : ""}`}>
-                    <Link data-toggle="tab" href="#" onClick={handleChange}>
+                    <Link data-toggle="tab" to="#" onClick={handleChange}>
                       Bình luận
                     </Link>
                   </li>
                   <li className={`${isDefault ? "" : "active"}`}>
-                    <Link data-toggle="tab" href="#" onClick={handleChange}>
+                    <Link data-toggle="tab" to="#" onClick={handleChange}>
                       Truyện theo dõi
                     </Link>
                   </li>

@@ -84,7 +84,7 @@ function HotManga({ mangas, page, totalMangas }) {
                           <ul className="comic-item">
                             {manga?.chapter.map((chap) => (
                               <li
-                                className="flex gap-x-1 items-center justify-between"
+                                className="chapter clearfix flex gap-x-1 items-center justify-between"
                                 key={chap?._id}
                               >
                                 <Link
@@ -94,7 +94,7 @@ function HotManga({ mangas, page, totalMangas }) {
                                     chap?._id
                                   }`}
                                   title={chap?.chapName}
-                                  className="flex-grow text-[13px] whitespace-nowrap overflow-hidden !text-white text-ellipsis"
+                                  className="flex-grow text-[13px] whitespace-nowrap overflow-hidden text-ellipsis"
                                 >
                                   {chap?.chapName}
                                 </Link>

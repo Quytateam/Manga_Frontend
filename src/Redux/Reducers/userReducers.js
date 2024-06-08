@@ -17,6 +17,23 @@ export const userLoginReducer = (state = {}, action) => {
   }
 };
 
+export const userGoogleLoginReducer = (state = {}, action) => {
+  switch (action.type) {
+    case userConstants.USER_GOOGLE_LOGIN_REQUEST:
+      return { isLoading: true };
+    case userConstants.USER_GOOGLE_LOGIN_SUCCESS:
+      return { isLoading: false, userInfo: action.payload, isSuccess: true };
+    case userConstants.USER_GOOGLE_LOGIN_FAIL:
+      return { isLoading: false, isError: action.payload };
+    case userConstants.USER_GOOGLE_LOGIN_RESET:
+      return {};
+    case userConstants.USER_LOGOUT:
+      return {};
+    default:
+      return state;
+  }
+};
+
 // REGISTER
 export const userRegisterReducer = (state = {}, action) => {
   switch (action.type) {
@@ -149,6 +166,26 @@ export const userChangePasswordReducer = (state = {}, action) => {
     case userConstants.USER_CHANGE_PASSWORD_FAIL:
       return { isLoading: false, isError: action.payload };
     case userConstants.USER_CHANGE_PASSWORD_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+// CCREATE PASSWORD
+export const userCreatePasswordReducer = (state = {}, action) => {
+  switch (action.type) {
+    case userConstants.USER_CREATE_PASSWORD_REQUEST:
+      return { isLoading: true };
+    case userConstants.USER_CREATE_PASSWORD_SUCCESS:
+      return {
+        isLoading: false,
+        isSuccess: true,
+        message: action.payload.message,
+      };
+    case userConstants.USER_CREATE_PASSWORD_FAIL:
+      return { isLoading: false, isError: action.payload };
+    case userConstants.USER_CREATE_PASSWORD_RESET:
       return {};
     default:
       return state;

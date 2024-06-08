@@ -40,6 +40,8 @@ import { getAllFollowMangasAction } from "./Redux/Actions/userActions";
 import ResetPassword from "./Screens/ResetPassword";
 import JoinUpMangas from "./Screens/Dashboard/Admin/JoinUpMangas";
 import ManageAllManga from "./Screens/Dashboard/Admin/ManageAllManga";
+import { ThemeProvider } from "./Layout/ThemeContext";
+import ContactUs from "./Screens/ContactUs";
 
 function App() {
   Aos.init();
@@ -73,82 +75,94 @@ function App() {
   return (
     <>
       <ToasterContainer />
-      <Routes>
-        {/* *****************PUBLIC ROUTES *************** */}
-        <Route path="/" element={<HomeScreen />} />
-        <Route path="/Login" element={<Login />} />
-        <Route path="/VerifyEmail" element={<VerifyEmailPage />} />
-        <Route path="/Register" element={<Register />} />
-        <Route path="/RecoverPassword" element={<RecoverPassword />} />
-        <Route path="/auth/users/reset-password" element={<ResetPassword />} />
-        <Route path="/hot" element={<HotMangaPage />} />
-        <Route path="/newupdate" element={<NewUpdatesPage />} />
-        <Route path="/lich-su" element={<HistoryPage />} />
-        <Route path="/the-loai" element={<MPByGenre />} />
-        <Route path="/the-loai/:genre" element={<MPByGenre />} />
-        <Route path="/tim-truyen-nang-cao" element={<ASearchPage />} />
-        <Route path="/truyen-con-trai" element={<BoyMangaPage />} />
-        <Route path="/truyen-con-gai" element={<GirlMangaPage />} />
-        <Route path="/truyen-tranh/:manganame" element={<SingleManga />} />
-        <Route
-          path="/truyen-tranh/:manganame/:chapname/:chapid"
-          element={<ReadPage />}
-        />
-        <Route path="/user/:userid" element={<PublicInfo />} />
-        <Route path="*" element={<NotFound />} />
-        <Route path="/notpound" element={<NotFound />} />
-        {/* *****************PRIVATE PUBLIC ROUTES *************** */}
-        <Route element={<ProtectedRouter />}>
-          <Route path="/theo-doi" element={<FollowManga />} />
-          <Route path="/secure/:sidelink" element={<SecureInfo />} />
-          <Route path="/admin/Create" element={<CreateManga />} />
-          <Route path="/admin/ManageManga" element={<ManageManga />} />
-          <Route path="/admin/JoinUpMangas" element={<JoinUpMangas />} />
-          <Route path="/admin/ManageManga/Update/:id" element={<EditManga />} />
+      <ThemeProvider>
+        <Routes>
+          {/* *****************PUBLIC ROUTES *************** */}
+          <Route path="/" element={<HomeScreen />} />
+          <Route path="/Login" element={<Login />} />
+          <Route path="/VerifyEmail" element={<VerifyEmailPage />} />
+          <Route path="/Register" element={<Register />} />
+          <Route path="/RecoverPassword" element={<RecoverPassword />} />
           <Route
-            path="/admin/ManageManga/ManageChapter/:id"
-            element={<ManageChapter />}
+            path="/auth/users/reset-password"
+            element={<ResetPassword />}
           />
+          <Route path="/hot" element={<HotMangaPage />} />
+          <Route path="/newupdate" element={<NewUpdatesPage />} />
+          <Route path="/lich-su" element={<HistoryPage />} />
+          <Route path="/the-loai" element={<MPByGenre />} />
+          <Route path="/the-loai/:genre" element={<MPByGenre />} />
+          <Route path="/tim-truyen-nang-cao" element={<ASearchPage />} />
+          <Route path="/truyen-con-trai" element={<BoyMangaPage />} />
+          <Route path="/truyen-con-gai" element={<GirlMangaPage />} />
+          <Route path="/truyen-tranh/:manganame" element={<SingleManga />} />
           <Route
-            path="/admin/JoinUpMangas/ManageChapter/:id"
-            element={<ManageChapter />}
+            path="/truyen-tranh/:manganame/:chapname/:chapid"
+            element={<ReadPage />}
           />
-          <Route
-            path="/admin/ManageManga/CreateChapter/:id"
-            element={<CreateChapter />}
-          />
-          <Route
-            path="/admin/JoinUpMangas/CreateChapter/:id"
-            element={<CreateChapter />}
-          />
-          <Route
-            path="/admin/ManageManga/UpdateChapter/:id"
-            element={<EditChapter />}
-          />
-          <Route
-            path="/admin/JoinUpMangas/UpdateChapter/:id"
-            element={<EditChapter />}
-          />
-          {/* *****************ADMIN ROUTES *************** */}
-          <Route element={<AdminProtectedRouter />}>
-            <Route path="/admin/ManageAllManga" element={<ManageAllManga />} />
+          <Route path="/user/:userid" element={<PublicInfo />} />
+          <Route path="/lien-he" element={<ContactUs />} />
+          <Route path="*" element={<NotFound />} />
+          <Route path="/notpound" element={<NotFound />} />
+          {/* *****************PRIVATE PUBLIC ROUTES *************** */}
+          <Route element={<ProtectedRouter />}>
+            <Route path="/theo-doi" element={<FollowManga />} />
+            <Route path="/secure/:sidelink" element={<SecureInfo />} />
+            <Route path="/admin/Create" element={<CreateManga />} />
+            <Route path="/admin/ManageManga" element={<ManageManga />} />
+            <Route path="/admin/JoinUpMangas" element={<JoinUpMangas />} />
             <Route
-              path="/admin/ManageAllManga/Update/:id"
+              path="/admin/ManageManga/Update/:id"
               element={<EditManga />}
             />
             <Route
-              path="/admin/ManageAllManga/ManageChapter/:id"
+              path="/admin/ManageManga/ManageChapter/:id"
               element={<ManageChapter />}
             />
             <Route
-              path="/admin/ManageAllManga/UpdateChapter/:id"
+              path="/admin/JoinUpMangas/ManageChapter/:id"
+              element={<ManageChapter />}
+            />
+            <Route
+              path="/admin/ManageManga/CreateChapter/:id"
+              element={<CreateChapter />}
+            />
+            <Route
+              path="/admin/JoinUpMangas/CreateChapter/:id"
+              element={<CreateChapter />}
+            />
+            <Route
+              path="/admin/ManageManga/UpdateChapter/:id"
               element={<EditChapter />}
             />
-            <Route path="/admin/ManageUser" element={<ManageUser />} />
-            <Route path="/admin/ManageGenre" element={<ManageGenre />} />
+            <Route
+              path="/admin/JoinUpMangas/UpdateChapter/:id"
+              element={<EditChapter />}
+            />
+            {/* *****************ADMIN ROUTES *************** */}
+            <Route element={<AdminProtectedRouter />}>
+              <Route
+                path="/admin/ManageAllManga"
+                element={<ManageAllManga />}
+              />
+              <Route
+                path="/admin/ManageAllManga/Update/:id"
+                element={<EditManga />}
+              />
+              <Route
+                path="/admin/ManageAllManga/ManageChapter/:id"
+                element={<ManageChapter />}
+              />
+              <Route
+                path="/admin/ManageAllManga/UpdateChapter/:id"
+                element={<EditChapter />}
+              />
+              <Route path="/admin/ManageUser" element={<ManageUser />} />
+              <Route path="/admin/ManageGenre" element={<ManageGenre />} />
+            </Route>
           </Route>
-        </Route>
-      </Routes>
+        </Routes>
+      </ThemeProvider>
     </>
   );
 }

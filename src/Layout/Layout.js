@@ -1,14 +1,18 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import Navbar from "./Navbar/Navbar";
 import Footer from "./Footer/Footer";
 import "./style.css";
 import MainNav from "./Navbar/MainNav";
+import ThemeContext from "./ThemeContext";
+import PrivacyPolicyModal from "../Components/Modals/PrivacyPolicyModal";
 
 function Layout({ children }) {
+  const { theme, toggleTheme } = useContext(ThemeContext);
+  const [modalOpen, setModalOpen] = useState(false);
   return (
     <>
-      <div className="dark text-white">
-        <Navbar />
+      <div className={`${theme === "dark" ? "dark text-white" : ""}`}>
+        <Navbar toggleTheme={toggleTheme} />
         <nav
           className="main-nav hidden-xs"
           id="mainNav"
@@ -32,7 +36,8 @@ function Layout({ children }) {
         <main className="main">
           <div className="container">{children}</div>
         </main>
-        <Footer />
+        <Footer setModalOpen={setModalOpen} />
+        {modalOpen && <PrivacyPolicyModal setModalOpen={setModalOpen} />}
       </div>
     </>
   );

@@ -19,6 +19,16 @@ const loginAction = (datas) => async (dispatch) => {
   }
 };
 
+// login google action
+const loginGoogleAction = () => async (dispatch) => {
+  try {
+    dispatch({ type: userConstants.USER_GOOGLE_LOGIN_REQUEST });
+    await userAPI.loginGoogleService();
+  } catch (error) {
+    ErrorsAction(error, dispatch, userConstants.USER_GOOGLE_LOGIN_FAIL);
+  }
+};
+
 // register action
 const registerAction = (datas) => async (dispatch) => {
   try {
@@ -36,6 +46,7 @@ const logoutAction = () => (dispatch) => {
   dispatch(stopCronJobAction());
   dispatch({ type: userConstants.USER_LOGOUT });
   dispatch({ type: userConstants.USER_LOGIN_RESET });
+  dispatch({ type: userConstants.USER_GOOGLE_LOGIN_RESET });
   dispatch({ type: userConstants.USER_REGISTER_RESET });
   dispatch({ type: userConstants.USER_RESENDEMAILVERIFICATIONTOKEN_RESET });
   dispatch({ type: userConstants.USER_VERIFYEMAIL_RESET });
@@ -48,6 +59,8 @@ const logoutAction = () => (dispatch) => {
   dispatch({ type: userConstants.GET_COMMENT_MANGAS_RESET });
   dispatch({ type: userConstants.GET_NOTIFICATION_RESET });
   dispatch({ type: userConstants.HIDDEN_NOTIFICATION_RESET });
+  dispatch({ type: userConstants.USER_CHANGE_PASSWORD_RESET });
+  dispatch({ type: userConstants.USER_CREATE_PASSWORD_RESET });
   dispatch({ type: userConstants.FOLLOW_MANGA_RESET });
   dispatch({ type: userConstants.DELETE_FOLLOW_MANGA_RESET });
   dispatch({ type: userConstants.GET_DATA_READ_RESET });
@@ -210,6 +223,25 @@ const changePasswordAction = (passwords) => async (dispatch, getState) => {
     dispatch(logoutAction());
   } catch (error) {
     ErrorsAction(error, dispatch, userConstants.USER_CHANGE_PASSWORD_FAIL);
+  }
+};
+
+// create password action
+const createPasswordAction = (passwords) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: userConstants.USER_CREATE_PASSWORD_REQUEST });
+    const response = await userAPI.createPasswordService(
+      passwords,
+      tokenProtection(getState)
+    );
+    dispatch({
+      type: userConstants.USER_CREATE_PASSWORD_SUCCESS,
+      payload: response,
+    });
+    toast.success("Password has been created");
+    dispatch(logoutAction());
+  } catch (error) {
+    ErrorsAction(error, dispatch, userConstants.USER_CREATE_PASSWORD_FAIL);
   }
 };
 
@@ -447,6 +479,7 @@ const stopCronJobAction = () => async (dispatch, getState) => {
 
 export {
   loginAction,
+  loginGoogleAction,
   registerAction,
   logoutAction,
   resendEmailVerificationTokenAction,
@@ -455,6 +488,7 @@ export {
   resetPasswordAction,
   updateProfileAction,
   changePasswordAction,
+  createPasswordAction,
   getFollowMangasAction,
   getAllFollowMangasAction,
   getCommentMangasAction,

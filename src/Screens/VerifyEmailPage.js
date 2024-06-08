@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Layout from "../Layout/Layout";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,6 +7,7 @@ import {
   verifyEmailAction,
 } from "../Redux/Actions/userActions";
 import toast from "react-hot-toast";
+import ThemeContext from "../Layout/ThemeContext";
 
 function VerifyEmailPage() {
   const { userInfo } = useSelector((state) => state.userLogin);
@@ -15,6 +16,7 @@ function VerifyEmailPage() {
   const navigate = useNavigate();
   const [otp, setOtp] = useState(new Array(6).fill(""));
   const [focusedIndex, setFocusedIndex] = useState(0);
+  const { theme } = useContext(ThemeContext);
   const { resendError } = useSelector(
     (state) => state.userResendEmailVerificationToken
   );
@@ -33,17 +35,22 @@ function VerifyEmailPage() {
 
     // Kiểm tra xem tất cả các ô đã được nhập đúng chưa
     const isAllOtpEntered = updatedOtp.every((value) => value !== "");
-
     // Nếu đây là ô cuối cùng và tất cả các ô đã được nhập đúng
     if (index === otp.length - 1 && isAllOtpEntered) {
       // Thực hiện hành động
-      console.log("Entered code:", updatedOtp.join(""));
       dispatch(
         verifyEmailAction({
           userId: (userInfo || user)?._id,
           OTP: updatedOtp.join(""),
         })
       );
+      setOtp(new Array(6).fill(""));
+      const firstFilledInput = document.querySelector(
+        '.code-input:not([value=""])'
+      );
+      if (firstFilledInput) {
+        firstFilledInput.focus();
+      }
     } else if (e.target.value && index < otp.length - 1) {
       // Chuyển đến ô nhập tiếp theo nếu có giá trị và không phải ô cuối cùng
       const nextInput = document.getElementById(`code-input-${index + 1}`);
@@ -51,10 +58,21 @@ function VerifyEmailPage() {
     }
   };
 
-  const handleKeyDown = (index, e) => {
-    if (e.key === "Backspace" && index > 0 && !e.target.value) {
+  // const handleKeyDown = (index, e) => {
+  //   if (e.key === "Backspace" && index > 0 && !e.target.value) {
+  //     const prevInput = document.getElementById(`code-input-${index - 1}`);
+  //     if (prevInput) prevInput.focus();
+  //   }
+  // };
+
+  const handleKeyUp = (index, e) => {
+    if (e.key === "Backspace" && index >= 0) {
       const prevInput = document.getElementById(`code-input-${index - 1}`);
-      if (prevInput) prevInput.focus();
+      if (prevInput) {
+        const updatedOtp = [...otp];
+        updatedOtp[index - 1] = "";
+        setOtp(updatedOtp);
+      }
     }
   };
 
@@ -97,44 +115,16 @@ function VerifyEmailPage() {
         // navigate("/profile");
       }
     }
-    // if (userInfo?.isVerified) {
-    //   if (userInfo?.isAdmin) {
-    //     navigate("/admin/ManageManga");
-    //   } else if (userInfo) {
-    //     navigate("/");
-    //     // navigate("/profile");
-    //   }
-    //   if (verifyEmailSuccess) {
-    //     toast.success(`Welcome back ${userInfo?.fullName}`);
-    //   }
-    //   if (verifyEmailError) {
-    //     toast.error(verifyEmailError);
-    //     dispatch({ type: "USER_LOGIN_RESET" });
-    //   }
-    // }
-    if (verifyEmailError) {
-      setOtp(new Array(6).fill(""));
-      const firstFilledInput = document.querySelector(
-        '.code-input:not([value=""])'
-      );
-      if (firstFilledInput) {
-        firstFilledInput.focus();
-      }
-      toast.error(verifyEmailError);
-    }
-  }, [
-    verifyEmailSuccess,
-    userInfo,
-    user,
-    verifyEmailError,
-    navigate,
-    dispatch,
-  ]);
+  }, [verifyEmailSuccess, userInfo, user, navigate, dispatch]);
 
   return (
     <Layout>
       <div className="row">
-        <div id="ctl00_divCenter" className="full-width col-sm-12">
+        <div
+          id="ctl00_divCenter"
+          className="full-width col-sm-12"
+          style={{ minHeight: "400px" }}
+        >
           <div id="ctl00_mainContent_pnlLogin">
             <div
               id="ctl00_mainContent_pnlStandardLogin"
@@ -150,19 +140,36 @@ function VerifyEmailPage() {
                           className={`code-box ${
                             focusedIndex === index ? "active" : ""
                           }`}
+                          style={{
+                            border: `2px solid ${
+                              focusedIndex === index
+                                ? "#627ad1"
+                                : theme === "dark"
+                                ? "#fff"
+                                : "#000"
+                            }`,
+                          }}
                           key={index}
                         >
                           <span className="code-number">
                             <input
                               id={`code-input-${index}`}
-                              className="max-w-10 code-input text-white"
+                              theme
+                              className={`max-w-10 code-input ${
+                                theme === "dark" ? "text-white" : "text-black"
+                              }`}
+                              style={{
+                                caretColor: `${
+                                  theme === "dark" ? "white" : "black"
+                                }`,
+                              }}
                               type=""
                               maxLength="1"
                               disabled={verifyEmailLoading}
                               value={data}
                               onChange={(e) => handleChange(index, e)}
-                              onKeyDown={(e) => handleKeyDown(index, e)}
-                              //   onKeyUp={handleKeyUp}
+                              // onKeyDown={(e) => handleKeyDown(index, e)}
+                              onKeyUp={(e) => handleKeyUp(index, e)}
                               onFocus={() => handleFocus(index)}
                             />
                           </span>

@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import NettromLogo from "../../assets/nettrom-logo.png";
+// import NettromLogo from "../../assets/nettrom-logo.png";
+import MangaLogo from "../../assets/mangadex-logo.svg";
 import SearchInput from "./SearchInput";
-import routes from "../../routes.ts";
+// import routes from "../../routes.ts";
 import MainNav from "./MainNav.js";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutAction } from "../../Redux/Actions/userActions.js";
@@ -12,13 +13,14 @@ import toast from "react-hot-toast";
 // const ENDPOINT = "http://localhost:5000";
 // var socket;
 
-function Navbar() {
+function Navbar({ toggleTheme }) {
   const [openMenu, setOpenMenu] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   // const [socketConnected, setSocketConnected] = useState(false);
   // const [isFalse, setIsFalse] = useState(false);
   const { userInfo } = useSelector((state) => state.userLogin);
+  const user = JSON.parse(localStorage.getItem("userInfo"));
   const { isSuccess: verifyEmailSuccess } = useSelector(
     (state) => state.userVerifyEmail
   );
@@ -43,7 +45,7 @@ function Navbar() {
   // }, [pathname, params])
 
   // useEffect(() => {
-  //   if (userInfo?.token) {
+  //   if ((userInfo || user)?.token) {
   //     socket = io(ENDPOINT);
   //     socket.emit("setup", userInfo);
   //     socket.on("connected", () => setSocketConnected(true));
@@ -74,7 +76,7 @@ function Navbar() {
                 <img
                   alt="Logo"
                   className="my-auto"
-                  src={NettromLogo}
+                  src={MangaLogo}
                   width="150"
                   style={{ aspectRatio: 5 }}
                 />
@@ -83,21 +85,26 @@ function Navbar() {
             <div className="navbar-form navbar-left hidden-xs search-box comicsearchbox">
               <SearchInput />
             </div>
-            <i className="fa fa-lightbulb-o toggle-dark"></i>
-            {userInfo?.token && (
-              <Link
-                to="/secure/Notifications"
-                className="fa fa-bell toggle-dark ml-8"
-              ></Link>
+            <i
+              className="fa fa-lightbulb-o toggle-dark"
+              onClick={toggleTheme}
+            ></i>
+            {(userInfo || user)?.token && (
+              <div className="notifications">
+                <Link
+                  to="/secure/Notifications"
+                  className="fa fa-comment"
+                ></Link>
+              </div>
             )}
-            <Link
+            {/* <Link
               href={routes.nettrom.search}
               type="button"
               className="search-button-icon visible-xs"
               aria-label="Search"
             >
               <i className="fa fa-search"></i>
-            </Link>
+            </Link> */}
             <button
               type="button"
               className="navbar-toggle"
@@ -112,7 +119,7 @@ function Navbar() {
             </button>
           </div>
           <ul className="nav-account list-inline hidden-xs pull-right mt-[13px]">
-            {userInfo?.token || verifyEmailSuccess ? (
+            {(userInfo || user)?.token || verifyEmailSuccess ? (
               <li className={`dropdown ${isHovered && "open"}`}>
                 <Link
                   data-toggle="dropdown"
@@ -124,7 +131,11 @@ function Navbar() {
                   <img
                     className="fn-thumb mr-2"
                     alt="Avatar"
-                    src={userInfo?.image ? userInfo?.image : "/images/user.png"}
+                    src={
+                      (userInfo || user)?.image
+                        ? (userInfo || user)?.image
+                        : "/images/user.png"
+                    }
                   />{" "}
                   <span>Cá nhân</span>{" "}
                   <i className="fa fa-caret-down ml-2 pt-1"></i>
@@ -184,7 +195,7 @@ function Navbar() {
         </div>
         <MainNav />
         <ul className="nav-account list-inline">
-          {userInfo?.token || verifyEmailSuccess ? (
+          {(userInfo || user)?.token || verifyEmailSuccess ? (
             <li className={`dropdown ${isHovered && "open"}`}>
               <Link
                 data-toggle="dropdown"
@@ -196,7 +207,11 @@ function Navbar() {
                 <img
                   className="fn-thumb mr-2 mt-3"
                   alt="Avatar"
-                  src={userInfo?.image ? userInfo?.image : "/images/user.png"}
+                  src={
+                    (userInfo || user)?.image
+                      ? (userInfo || user)?.image
+                      : "/images/user.png"
+                  }
                 />{" "}
                 <span>Cá nhân</span>{" "}
                 <i className="fa fa-caret-down ml-2 pt-1 mt-3"></i>

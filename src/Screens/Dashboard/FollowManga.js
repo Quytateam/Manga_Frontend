@@ -3,7 +3,7 @@ import Layout from "../../Layout/Layout";
 import TopTitles from "../../Components/Home/TopTitles";
 import ReadingHistory from "../../Components/Home/ReadingHistory";
 import FollowList from "../../Components/Home/FollowList";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 function FollowManga() {
   return (
@@ -47,7 +47,7 @@ function FollowManga() {
                   style={{ fontSize: 16, marginBottom: 15 }}
                 >
                   <li className="active">
-                    <a href="/lich-su">Mới cập nhật</a>
+                    <Link to="/lich-su">Mới cập nhật</Link>
                   </li>
                 </ul>
               </div>

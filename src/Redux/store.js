@@ -6,6 +6,7 @@ import * as mangas from "./Reducers/MangasReducers";
 const rootReducer = combineReducers({
   // user reducers
   userLogin: User.userLoginReducer,
+  userGoogleLogin: User.userGoogleLoginReducer,
   userRegister: User.userRegisterReducer,
   userResendEmailVerificationToken:
     User.userResendEmailVerificationTokenReducer,
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
   userUpdateProfile: User.userUpdateProfileReducer,
   //   userDeleteProfile: User.userDeleteProfileReducer,
   userChangePassword: User.userChangePasswordReducer,
+  userCreatePassword: User.userCreatePasswordReducer,
   userGetFollowMangas: User.userGetFollowMangasReducer,
   userGetAllFollowMangas: User.userGetAllFollowMangasReducer,
   userFollowManga: User.userFollowMangaReducer,

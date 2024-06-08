@@ -1,7 +1,5 @@
 import React, { useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
-import routes from "../../routes.ts";
-import { MangaData } from "../../Data/MangaData.js";
 import { useDispatch, useSelector } from "react-redux";
 import { getHistoryMangasAction } from "../../Redux/Actions/MangasActions.js";
 import toast from "react-hot-toast";
@@ -14,7 +12,7 @@ function ReadingHistory() {
     mangasHistory,
     // pages,
     // page: mangasGenrePage,
-    totalMangas,
+    // totalMangas,
     isError,
   } = useSelector((state) => state.getMangasHistory);
   useEffect(() => {

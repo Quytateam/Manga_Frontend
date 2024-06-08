@@ -1,18 +1,24 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo, useRef } from "react";
 import Layout from "../Layout/Layout";
-import { NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { LoginValidation } from "../Components/Validation/UserValidation";
 import { Input } from "../Components/UsedInputs";
 import { InlineError } from "../Components/Notfications/Error";
-import { loginAction } from "../Redux/Actions/userActions";
+import { loginAction, loginGoogleAction } from "../Redux/Actions/userActions";
 import toast from "react-hot-toast";
 
 function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+  const isCheckRef = useRef(false);
+  const queryParams = useMemo(
+    () => new URLSearchParams(location.search),
+    [location.search]
+  );
   const [isFalse, setIsFalse] = useState(false);
   const { isLoading, isError, userInfo, isSuccess } = useSelector(
     (state) => state.userLogin
@@ -28,6 +34,20 @@ function Login() {
   const onSubmit = (data) => {
     dispatch(loginAction(data));
   };
+
+  // login by google
+  const onLoginGoogle = () => {
+    dispatch(loginGoogleAction());
+  };
+
+  // useEffect
+  useEffect(() => {
+    if (queryParams.get("success") && !isCheckRef.current) {
+      dispatch(loginAction({ email: queryParams.get("success") }));
+      isCheckRef.current = true;
+    }
+  }, [queryParams, dispatch]);
+
   // useEffect
   useEffect(() => {
     if (isSuccess) {
@@ -35,7 +55,8 @@ function Login() {
         if (userInfo?.isAdmin) {
           navigate("/admin/ManageUser");
         } else if (userInfo) {
-          navigate(-1);
+          // navigate(-1);
+          navigate("/");
           // navigate("/profile");
         }
         if (isSuccess) {
@@ -196,6 +217,18 @@ function Login() {
                         </span>
                       )}
                     </form>
+                  </div>
+                  <div className="open-login mrb20">
+                    <div className="form-group">
+                      <Link
+                        className="btn login-google"
+                        onClick={() => onLoginGoogle()}
+                      >
+                        {" "}
+                        <i className="fa fa-google"></i>{" "}
+                        <span>Đăng nhập bằng Google</span>{" "}
+                      </Link>
+                    </div>
                   </div>
                 </div>
               </div>

@@ -35,12 +35,7 @@ function MangaResults({ mangas, page, totalMangas }) {
   //   setPage(initialPage - 1);
   // }, [location.search, initialPage]);
   return (
-    <div
-      className={`Module Module-223 ${
-        mangas.length > 0 ? "min-h-0" : "min-h-screen"
-      }`}
-      id="results"
-    >
+    <div className={`Module Module-223 min-h-0`} id="results">
       {mangas?.length > 0 ? (
         <div className="ModuleContent">
           <div className="items">
@@ -93,7 +88,7 @@ function MangaResults({ mangas, page, totalMangas }) {
                       <ul className="comic-item">
                         {manga?.chapter?.map((chap) => (
                           <li
-                            className="flex gap-x-1 items-center justify-between"
+                            className="chapter clearfix flex gap-x-1 items-center justify-between"
                             key={chap?._id}
                           >
                             <Link
@@ -101,7 +96,7 @@ function MangaResults({ mangas, page, totalMangas }) {
                                 manga?.nameOnUrl
                               }/${convertToSlug(chap?.chapName)}/${chap?._id}`}
                               title={chap?.chapName}
-                              className="flex-grow text-[13px] whitespace-nowrap overflow-hidden !text-white text-ellipsis"
+                              className="flex-grow text-[13px] whitespace-nowrap overflow-hidden text-ellipsis"
                             >
                               {chap?.chapName}
                             </Link>

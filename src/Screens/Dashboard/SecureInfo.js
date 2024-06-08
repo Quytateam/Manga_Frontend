@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Layout from "../../Layout/Layout";
 import { Link, NavLink, useParams } from "react-router-dom";
-import { SideLinks } from "../../Data/SideLinks";
+import { SideLinks, SideLinks2 } from "../../Data/SideLinks";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutAction } from "../../Redux/Actions/userActions";
 import toast from "react-hot-toast";
@@ -10,7 +10,9 @@ function SecureInfo() {
   const dispatch = useDispatch();
   const { userInfo } = useSelector((state) => state.userLogin);
   const { sidelink } = useParams();
-  const sidelinkSelect = SideLinks.find((s) => s.link === sidelink);
+  const sidelinkSelect = userInfo?.hasPassword
+    ? SideLinks.find((s) => s.link === sidelink)
+    : SideLinks2.find((s) => s.link === sidelink);
   const [showSide, setShowSide] = useState(true);
   const toggleShowSide = () => {
     setShowSide(!showSide);
@@ -78,19 +80,34 @@ function SecureInfo() {
               {showSide && (
                 <nav className="user-sidelink clearfix">
                   <ul>
-                    {SideLinks.map((link, idx) => (
-                      <li
-                        key={idx}
-                        className={`hvr-sweep-to-right ${
-                          link.link === sidelink ? "active" : ""
-                        }`}
-                      >
-                        <Link to={`/secure/${link.link}`}>
-                          <i className={`${link.icon} pr-2`}></i>
-                          {link.name}
-                        </Link>
-                      </li>
-                    ))}
+                    {userInfo?.hasPassword
+                      ? SideLinks.map((link, idx) => (
+                          <li
+                            key={idx}
+                            className={`hvr-sweep-to-right ${
+                              link.link === sidelink ? "active" : ""
+                            }`}
+                          >
+                            <Link to={`/secure/${link.link}`}>
+                              <i className={`${link.icon} pr-2`}></i>
+                              {link.name}
+                            </Link>
+                          </li>
+                        ))
+                      : SideLinks2.map((link, idx) => (
+                          <li
+                            key={idx}
+                            className={`hvr-sweep-to-right ${
+                              link.link === sidelink ? "active" : ""
+                            }`}
+                          >
+                            <Link to={`/secure/${link.link}`}>
+                              <i className={`${link.icon} pr-2`}></i>
+                              {link.name}
+                            </Link>
+                          </li>
+                        ))}
+
                     <li className="hvr-sweep-to-righ">
                       <Link to={`/`} onClick={logoutHandle}>
                         <i className="fa fa-sign-out pr-2"></i>
