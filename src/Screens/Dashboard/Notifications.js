@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getNotificationAction,
   hiddenNotificationAction,
+  seenNotificationAction,
 } from "../../Redux/Actions/userActions";
 import toast from "react-hot-toast";
 import { formatDate } from "../../unit/formatDate";
@@ -26,6 +27,7 @@ function Notifications() {
   };
   // useEffect
   useEffect(() => {
+    dispatch(seenNotificationAction());
     dispatch(getNotificationAction());
     if (isError) {
       toast.error(isError);

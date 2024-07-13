@@ -64,7 +64,6 @@ function EditChapter() {
       })
     );
   };
-
   useEffect(() => {
     if (chapterInfo?._id !== id) {
       dispatch(getChapterInfoAction(id, mangaId || oldMangaId));

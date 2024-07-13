@@ -18,6 +18,7 @@ import {
   deleteFollowManga,
 } from "../Context/Functionalities";
 import { getDataReadAction } from "../Redux/Actions/userActions";
+import CollectionList from "../Components/Home/CollectionList";
 
 const getStatus = (status) => {
   switch (status) {
@@ -194,17 +195,22 @@ function SingleManga() {
                   </div>
                   <div className="col-xs-8 col-info">
                     <ul className="list-info">
-                      <li className="author row">
-                        <p className="name col-xs-4">
-                          <i className="fa fa-plus"></i> Tên khác
-                        </p>
-                        <p className="col-xs-8">
-                          {getOtherName(
-                            manga?.janpanName || oldManga?.janpanName,
-                            manga?.engName || oldManga?.engName
-                          )}
-                        </p>
-                      </li>
+                      {(manga?.janpanName ||
+                        oldManga?.janpanName ||
+                        manga?.engName ||
+                        oldManga?.engName) && (
+                        <li className="author row">
+                          <p className="name col-xs-4">
+                            <i className="fa fa-plus"></i> Tên khác
+                          </p>
+                          <p className="col-xs-8">
+                            {getOtherName(
+                              manga?.janpanName || oldManga?.janpanName,
+                              manga?.engName || oldManga?.engName
+                            )}
+                          </p>
+                        </li>
+                      )}
                       <li className="author row">
                         <p className="name col-xs-4">
                           <i className="fa fa-user"></i> Tác giả
@@ -422,6 +428,7 @@ function SingleManga() {
           <CommentList manganame={manganame} />
         </div>
         <div className="right-side col-md-4 cmszone" id="ctl00_divRight">
+          <CollectionList mangaId={manga?._id || oldMangaRef?._id} />
           <TopTitles />
         </div>
       </div>

@@ -58,7 +58,9 @@ const logoutAction = () => (dispatch) => {
   dispatch({ type: userConstants.GET_ALL_FOLLOW_MANGAS_RESET });
   dispatch({ type: userConstants.GET_COMMENT_MANGAS_RESET });
   dispatch({ type: userConstants.GET_NOTIFICATION_RESET });
+  dispatch({ type: userConstants.GET_NOTIFICATION_IS_READ_RESET });
   dispatch({ type: userConstants.HIDDEN_NOTIFICATION_RESET });
+  dispatch({ type: userConstants.SEEN_NOTIFICATION_RESET });
   dispatch({ type: userConstants.USER_CHANGE_PASSWORD_RESET });
   dispatch({ type: userConstants.USER_CREATE_PASSWORD_RESET });
   dispatch({ type: userConstants.FOLLOW_MANGA_RESET });
@@ -103,6 +105,7 @@ const logoutAction = () => (dispatch) => {
   dispatch({ type: mangasConstants.UPDATE_CHAPTER_RESET });
   dispatch({ type: mangasConstants.ENABLE_CHAPTER_RESET });
   dispatch({ type: mangasConstants.DELETE_CHAPTERS_RESET });
+  dispatch({ type: mangasConstants.MANGAS_COLLECTION_RESET });
   dispatch(getRecommendMangasAction());
 };
 
@@ -309,6 +312,22 @@ const getNotificationAction = () => async (dispatch, getState) => {
   }
 };
 
+// get notification is read action
+const getNotificationIsReadAction = () => async (dispatch, getState) => {
+  try {
+    dispatch({ type: userConstants.GET_NOTIFICATION_IS_READ_REQUEST });
+    const response = await userAPI.getNotificationIsRead(
+      tokenProtection(getState)
+    );
+    dispatch({
+      type: userConstants.GET_NOTIFICATION_IS_READ_SUCCESS,
+      payload: response,
+    });
+  } catch (error) {
+    ErrorsAction(error, dispatch, userConstants.GET_NOTIFICATION_IS_READ_FAIL);
+  }
+};
+
 // hidden notification action
 const hiddenNotificationAction = (id) => async (dispatch, getState) => {
   try {
@@ -324,6 +343,21 @@ const hiddenNotificationAction = (id) => async (dispatch, getState) => {
     dispatch(getNotificationAction());
   } catch (error) {
     ErrorsAction(error, dispatch, userConstants.HIDDEN_NOTIFICATION_FAIL);
+  }
+};
+
+// seen notification action
+const seenNotificationAction = () => async (dispatch, getState) => {
+  try {
+    dispatch({ type: userConstants.SEEN_NOTIFICATION_REQUEST });
+    const response = await userAPI.seenNotification(tokenProtection(getState));
+    dispatch({
+      type: userConstants.SEEN_NOTIFICATION_SUCCESS,
+      payload: response,
+    });
+    dispatch(getNotificationIsReadAction());
+  } catch (error) {
+    ErrorsAction(error, dispatch, userConstants.SEEN_NOTIFICATION_FAIL);
   }
 };
 
@@ -493,7 +527,9 @@ export {
   getAllFollowMangasAction,
   getCommentMangasAction,
   getNotificationAction,
+  getNotificationIsReadAction,
   hiddenNotificationAction,
+  seenNotificationAction,
   getDataReadAction,
   getAllUsersAction,
   deleteUserAction,

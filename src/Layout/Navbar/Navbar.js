@@ -1,17 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-// import NettromLogo from "../../assets/nettrom-logo.png";
 import MangaLogo from "../../assets/mangadex-logo.svg";
 import SearchInput from "./SearchInput";
-// import routes from "../../routes.ts";
 import MainNav from "./MainNav.js";
 import { useDispatch, useSelector } from "react-redux";
-import { logoutAction } from "../../Redux/Actions/userActions.js";
+import {
+  getNotificationIsReadAction,
+  logoutAction,
+} from "../../Redux/Actions/userActions.js";
 import toast from "react-hot-toast";
-// import io from "socket.io-client";
+import io from "socket.io-client";
 
-// const ENDPOINT = "http://localhost:5000";
+const ENDPOINT = "http://localhost:5000";
 // var socket;
+
+const checkNotificationNotRead = (notifi) => {
+  const check = notifi?.some((notification) => notification.isRead === false);
+  return check;
+};
 
 function Navbar({ toggleTheme }) {
   const [openMenu, setOpenMenu] = useState(false);
@@ -25,6 +31,18 @@ function Navbar({ toggleTheme }) {
     (state) => state.userVerifyEmail
   );
   const [isHovered, setIsHovered] = useState(false);
+
+  const { isError, notificationIsReadList } = useSelector(
+    (state) => state.userGetNotificationIsRead
+  );
+  // const oldNotificateRef = useRef();
+  // useEffect(() => {
+  //   if (notificationList && notificationList?.length > 0) {
+  //     oldNotificateRef.current = notificationList;
+  //   }
+  // }, [notificationList]);
+
+  // const oldNotificate = oldNotificateRef.current;
 
   const handleMouseEnter = () => {
     setIsHovered(true);
@@ -44,19 +62,30 @@ function Navbar({ toggleTheme }) {
   }, []);
   // }, [pathname, params])
 
-  // useEffect(() => {
-  //   if ((userInfo || user)?.token) {
-  //     socket = io(ENDPOINT);
-  //     socket.emit("setup", userInfo);
-  //     socket.on("connected", () => setSocketConnected(true));
-  //     return () => {
-  //       socket.disconnect();
-  //       setSocketConnected(false);
-  //     };
-  //   } else {
-  //     // socket.off("disconnect", () => setSocketConnected(false));
-  //   }
-  // }, [userInfo]);
+  useEffect(() => {
+    dispatch(getNotificationIsReadAction());
+  }, [dispatch]);
+
+  useEffect(() => {
+    const socket = io(ENDPOINT);
+    if ((userInfo || user)?.token) {
+      socket.on("message", (message) => {
+        if (message === (userInfo || user)?._id || message === "All")
+          dispatch(getNotificationIsReadAction());
+      });
+
+      return () => {
+        socket.disconnect();
+      };
+    }
+    if (isError) {
+      toast.error(isError);
+      dispatch({
+        type: "GET_NOTIFICATION_RESET",
+      });
+    }
+  }, [userInfo, user, dispatch, isError]);
+
   return (
     <header
       className={`header ${
@@ -90,12 +119,19 @@ function Navbar({ toggleTheme }) {
               onClick={toggleTheme}
             ></i>
             {(userInfo || user)?.token && (
-              <div className="notifications">
-                <Link
-                  to="/secure/Notifications"
-                  className="fa fa-comment"
-                ></Link>
-              </div>
+              <>
+                <div className="notifications">
+                  <Link
+                    to="/secure/Notifications"
+                    className="fa fa-comment"
+                  ></Link>
+                </div>
+                {checkNotificationNotRead(notificationIsReadList) && (
+                  <div className="exclamation">
+                    <i className="fas fa-exclamation text-red-600"></i>
+                  </div>
+                )}
+              </>
             )}
             {/* <Link
               href={routes.nettrom.search}

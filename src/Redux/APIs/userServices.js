@@ -168,15 +168,29 @@ const getCommentMangas = async (token, page) => {
 
 // get all notification
 const getNotification = async (token) => {
-  const { data } = await Axios.get("/users/notification", {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-  return data;
+  if (token) {
+    const { data } = await Axios.get("/users/notification", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return data;
+  }
 };
 
-// get all notification
+// get notification is read
+const getNotificationIsRead = async (token) => {
+  if (token) {
+    const { data } = await Axios.get("/users/notificationisread", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return data;
+  }
+};
+
+// hidden notification
 const hiddenNotification = async (token, id) => {
   const { data } = await Axios.patch(
     `/users/notification/${id}`,
@@ -188,6 +202,22 @@ const hiddenNotification = async (token, id) => {
     }
   );
   return data;
+};
+
+// seen notification
+const seenNotification = async (token) => {
+  if (token) {
+    const { data } = await Axios.put(
+      "/users/seennotification",
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return data;
+  }
 };
 
 // follow manga API call
@@ -319,7 +349,9 @@ export {
   getAllFollowMangas,
   getCommentMangas,
   getNotification,
+  getNotificationIsRead,
   hiddenNotification,
+  seenNotification,
   followMangaService,
   deleteFollowMangaService,
   sendRequestService,

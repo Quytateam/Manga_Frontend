@@ -1,6 +1,6 @@
 import * as managasConstants from "../Constants/MangasConstants";
 
-// GET NEW UPDATE RECOMMEND
+// GET RECOMMEND
 export const mangasRecommendReducer = (
   state = { mangasRecommend: [] },
   action
@@ -15,6 +15,28 @@ export const mangasRecommendReducer = (
       };
     case managasConstants.MANGAS_RECOMMEND_FAIL:
       return { isLoading: false, isError: action.payload };
+    default:
+      return state;
+  }
+};
+
+// GET COLLECTION
+export const mangasCollectionReducer = (
+  state = { mangasCollection: [] },
+  action
+) => {
+  switch (action.type) {
+    case managasConstants.MANGAS_COLLECTION_REQUEST:
+      return { isLoading: true };
+    case managasConstants.MANGAS_COLLECTION_SUCCESS:
+      return {
+        isLoading: false,
+        mangasCollection: action.payload,
+      };
+    case managasConstants.MANGAS_COLLECTION_FAIL:
+      return { isLoading: false, isError: action.payload };
+    case managasConstants.MANGAS_COLLECTION_RESET:
+      return {};
     default:
       return state;
   }

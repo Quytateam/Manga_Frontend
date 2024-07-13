@@ -76,7 +76,8 @@ function ManageChapter() {
         <div className="">
           <Link
             to={`/admin/${getDynamicPart(url)}/UpdateChapter/${row._id}`}
-            state={{ mangaId: id }}
+            // state={{ mangaId: id }}
+            state={{ mangaId: id, mangaName: mangaName || oldMangaName }}
           >
             <i className="pointer fa fa-pencil-square-o text-success "></i>
           </Link>

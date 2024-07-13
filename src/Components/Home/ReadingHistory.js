@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getHistoryMangasAction } from "../../Redux/Actions/MangasActions.js";
 import toast from "react-hot-toast";
@@ -33,9 +33,9 @@ function ReadingHistory() {
           <div className="box darkBox">
             <h2>
               Lịch sử đọc truyện
-              <NavLink className="view-all" to="/lich-su">
+              <Link className="view-all" to="/lich-su">
                 Xem tất cả
-              </NavLink>
+              </Link>
             </h2>
             <ul className="list-unstyled">
               {mangasHistory?.slice(0, 5).map((manga) => (

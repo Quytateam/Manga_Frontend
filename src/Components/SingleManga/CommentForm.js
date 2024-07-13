@@ -36,7 +36,6 @@ function CommentForm({ manganame, chapname, chapid, setIsShow }) {
       dispatch({ type: "CREATE_COMMNENT_RESET" });
     }
   }, [isError, dispatch]);
-  console.log(userInfo);
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="comment_form">
       <Message

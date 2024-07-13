@@ -228,6 +228,18 @@ export const getRecommendMangasService = async (token) => {
   }
 };
 
+// get collection mangas Function
+export const getCollectionMangasService = async (token) => {
+  if (token) {
+    const { data } = await Axios.get("/manga/collection", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return data;
+  }
+};
+
 // get history mangas Function
 export const getHistoryMangasService = async (token, page) => {
   if (token) {

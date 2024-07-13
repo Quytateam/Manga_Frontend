@@ -7,7 +7,6 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getNewWeekMangasAction } from "../../Redux/Actions/MangasActions.js";
 import toast from "react-hot-toast";
-// import { MangaData } from "../../Data/MangaData.js";
 import { convertToSlug, formatDate } from "../../unit/formatDate.js";
 
 function FeaturedTitles() {
@@ -23,6 +22,7 @@ function FeaturedTitles() {
     speed: 500,
     slidesToShow: 5,
     slidesToScroll: 1,
+    autoplay: true,
     responsive: [
       {
         breakpoint: 1024,
@@ -101,7 +101,9 @@ function FeaturedTitles() {
                         </Link>
                         <span className="time">
                           <i className="fa fa-clock-o"></i>{" "}
-                          {formatDate(manga?.chapter[0]?.updatedAt)}
+                          {formatDate(
+                            manga?.chapter[0]?.updatedAt || manga?.updatedAt
+                          )}
                         </span>
                       </div>
                     </div>

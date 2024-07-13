@@ -24,7 +24,9 @@ const rootReducer = combineReducers({
   userDeleteFollowManga: User.userDeleteFollowMangaReducer,
   userGetCommentMangas: User.userGetCommentMangasReducer,
   userGetNotification: User.userGetNotificationReducer,
+  userGetNotificationIsRead: User.userGetNotificationIsReadReducer,
   userHiddenNotification: User.userHiddenNotificationReducer,
+  userSeenNotification: User.userSeenNotificationReducer,
   userGetDataRead: User.userGetDataReadReducer,
   userSendRequest: User.userSendRequestReducer,
   adminGetAllUsers: User.adminGetAllUsersReducer,
@@ -43,6 +45,7 @@ const rootReducer = combineReducers({
   genreEnable: genres.enableGenreReducer,
   // Mangas reducers
   getMangasRecommend: mangas.mangasRecommendReducer,
+  getMangasCollection: mangas.mangasCollectionReducer,
   getMangasHot: mangas.mangasHotReducer,
   getMangasNewWeek: mangas.mangasNewWeekReducer,
   getMangasNewUpdate: mangas.mangasNewUpdateReducer,

@@ -4659,7 +4659,7 @@ p {
 }
 
 .main {
-  min-height: 644px;
+  min-height: 694px;
 }
 
 .main .container {
@@ -4806,7 +4806,8 @@ p {
   background-color: #d0b32e;
   border-radius: 2px;
   cursor: pointer;
-  margin: 7px 0 0;
+  /* margin: 7px 0 0; */
+  margin: -15px 0 0;
   padding: 1px 5px 0;
   -webkit-transition: background-color 0.1s linear;
   -moz-transition: background-color 0.1s linear;
@@ -5643,6 +5644,11 @@ p {
   margin-bottom: 15px;
 }
 
+.darkBox.list {
+  max-height: 368px;
+  overflow: auto;
+}
+
 .darkBox:after {
   display: table;
   clear: both;
@@ -5699,6 +5705,14 @@ p {
 
 .darkBox ul li .thumb img {
   width: 100%;
+}
+
+.thumb.manga-render {
+  width: 14px !important;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 }
 
 .darkBox ul li h3 {
@@ -8752,6 +8766,12 @@ button.close {
   max-height: 350px;
   overflow: hidden;
   overflow-y: scroll;
+}
+
+.exclamation {
+  position: relative;
+  top: -32px;
+  right: -62px;
 }
 
 .notification-popup {

@@ -7,6 +7,7 @@ import TopTitles from "../Components/Home/TopTitles";
 import { useDispatch, useSelector } from "react-redux";
 import { getRecommendMangasAction } from "../Redux/Actions/MangasActions";
 import toast from "react-hot-toast";
+import CollectionList from "../Components/Home/CollectionList";
 
 function HomeScreen() {
   const dispatch = useDispatch();
@@ -35,6 +36,7 @@ function HomeScreen() {
           <NewUpdates mangas={mangasRecommend || oldRecommend} />
         </div>
         <div className="right-side col-md-4 cmszone" id="ctl00_divRight">
+          <CollectionList />
           <ReadingHistory />
           <TopTitles />
         </div>

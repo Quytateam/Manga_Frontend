@@ -233,6 +233,7 @@ function CreateChapter() {
               <div className="item text-center">
                 <Link
                   to={`/admin/ManageManga/CreateChapter/${id}`}
+                  state={{ mangaId: id, mangaName: mangaName || oldMangaName }}
                   onClick={() => setSuccess(false)}
                   type="button"
                   className="btn btn-success"

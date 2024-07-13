@@ -5,10 +5,14 @@ import "./style.css";
 import MainNav from "./Navbar/MainNav";
 import ThemeContext from "./ThemeContext";
 import PrivacyPolicyModal from "../Components/Modals/PrivacyPolicyModal";
+import { Link } from "react-router-dom";
 
 function Layout({ children }) {
   const { theme, toggleTheme } = useContext(ThemeContext);
   const [modalOpen, setModalOpen] = useState(false);
+  const scrollTop = () => {
+    window.scrollTo(0, 0);
+  };
   return (
     <>
       <div className={`${theme === "dark" ? "dark text-white" : ""}`}>
@@ -38,6 +42,15 @@ function Layout({ children }) {
         </main>
         <Footer setModalOpen={setModalOpen} />
         {modalOpen && <PrivacyPolicyModal setModalOpen={setModalOpen} />}
+        <Link
+          to="#"
+          onClick={() => scrollTop()}
+          id="back-to-top"
+          style={{ display: "inline" }}
+        >
+          {" "}
+          <i className="fa fa-angle-up"></i>{" "}
+        </Link>
       </div>
     </>
   );

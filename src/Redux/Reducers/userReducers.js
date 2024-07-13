@@ -287,6 +287,30 @@ export const userGetNotificationReducer = (
   }
 };
 
+// GET NOTIFICATION IS READ
+export const userGetNotificationIsReadReducer = (
+  state = {
+    notificationIsReadList: [],
+  },
+  action
+) => {
+  switch (action.type) {
+    case userConstants.GET_NOTIFICATION_IS_READ_REQUEST:
+      return { isLoading: true };
+    case userConstants.GET_NOTIFICATION_IS_READ_SUCCESS:
+      return {
+        isLoading: false,
+        notificationIsReadList: action.payload,
+      };
+    case userConstants.GET_NOTIFICATION_IS_READ_FAIL:
+      return { isLoading: false, isError: action.payload };
+    case userConstants.GET_NOTIFICATION_IS_READ_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
 // HIDDEN NOTIFICATION
 export const userHiddenNotificationReducer = (state = {}, action) => {
   switch (action.type) {
@@ -297,6 +321,22 @@ export const userHiddenNotificationReducer = (state = {}, action) => {
     case userConstants.HIDDEN_NOTIFICATION_FAIL:
       return { isLoading: false, isError: action.payload };
     case userConstants.HIDDEN_NOTIFICATION_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+// SEEN NOTIFICATION
+export const userSeenNotificationReducer = (state = {}, action) => {
+  switch (action.type) {
+    case userConstants.SEEN_NOTIFICATION_REQUEST:
+      return { isLoading: true };
+    case userConstants.SEEN_NOTIFICATION_SUCCESS:
+      return { isLoading: false };
+    case userConstants.SEEN_NOTIFICATION_FAIL:
+      return { isLoading: false, isError: action.payload };
+    case userConstants.SEEN_NOTIFICATION_RESET:
       return {};
     default:
       return state;

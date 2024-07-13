@@ -26,6 +26,7 @@ function ManageManga() {
       cell: (row) => (
         <div style={{ paddingRight: "16px" }}>{row.numberOfChapters}</div>
       ),
+      width: "15%",
     },
     // { name: "Người đăng", selector: (row) => row.name },
     {
@@ -36,6 +37,7 @@ function ManageManga() {
       cell: (row) => (
         <div style={{ paddingRight: "16px" }}>{row.numberOfViews}</div>
       ),
+      width: "15%",
     },
     {
       name: "Enable",

@@ -18,11 +18,11 @@ const mangaValidation = yup.object().shape({
   name: yup
     .string()
     .required("Please enter a manga name")
-    .max(50, "manga name should be less than 50 characters"),
+    .max(100, "manga name should be less than 100 characters"),
   desc: yup
     .string()
     .required("Please enter a manga description")
-    .max(300, "Manga description should be less than 300 characters"),
+    .max(3000, "Manga description should be less than 3000 characters"),
 });
 
 const chapterValidation = yup.object().shape({

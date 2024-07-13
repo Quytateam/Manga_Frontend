@@ -164,6 +164,22 @@ export const getRecommendMangasAction = () => async (dispatch, getState) => {
   }
 };
 
+// get collection mangas action
+export const getCollectionMangasAction = () => async (dispatch, getState) => {
+  try {
+    dispatch({ type: mangasConstants.MANGAS_COLLECTION_REQUEST });
+    const response = await mangasAPIs.getCollectionMangasService(
+      tokenProtection(getState)
+    );
+    dispatch({
+      type: mangasConstants.MANGAS_COLLECTION_SUCCESS,
+      payload: response,
+    });
+  } catch (error) {
+    ErrorsAction(error, dispatch, mangasConstants.MANGAS_COLLECTION_FAIL);
+  }
+};
+
 // get history mangas action
 export const getHistoryMangasAction = (page) => async (dispatch, getState) => {
   try {

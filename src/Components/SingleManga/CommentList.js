@@ -171,18 +171,21 @@ function CommentList({ manganame, chapter }) {
                 setIsShow={setIsShow}
               />
             )}
-            <div className="mrt10 mrb5">
-              <span className="sort-comments comment-action">
-                {/* <i className="icons"></i>Mới nhất */}
-                <span
-                  className={`${isChoose ? "icon-tick" : "icon-checkbox"} mt-2`}
-                  onClick={() => handleSortComment()}
-                ></span>
-                Mới nhất
-              </span>
-            </div>
+
             {(comments || oldComment)?.length > 0 ? (
               <>
+                <div className="mrt10 mrb5">
+                  <span className="sort-comments comment-action">
+                    {/* <i className="icons"></i>Mới nhất */}
+                    <span
+                      className={`${
+                        isChoose ? "icon-tick" : "icon-checkbox"
+                      } mt-2`}
+                      onClick={() => handleSortComment()}
+                    ></span>
+                    Mới nhất
+                  </span>
+                </div>
                 <div className="comment-list">
                   {(comments || oldComment)?.map((comment) => (
                     <div key={comment?._id} className="item clearfix">

@@ -20,6 +20,7 @@ function CreateManga() {
   const [isImage, setIsImage] = useState(false);
   const [isGenres, setIsGenres] = useState(false);
   const [mangaId, setMangaId] = useState();
+  const [mangaName, setMangaName] = useState();
   const { extendGenres } = useSelector((state) => state.genreGetExtend);
   const [isHeight, setIsHeight] = useState(null);
   const [success, setSuccess] = useState(false);
@@ -66,7 +67,10 @@ function CreateManga() {
         author: "",
         desc: "",
       });
-      if (manga !== undefined) setMangaId(manga?._id);
+      if (manga !== undefined) {
+        setMangaId(manga?._id);
+        setMangaName(manga?.name);
+      }
       setGenres([]);
       setSelectedSort("0");
       setImage("");
@@ -307,6 +311,7 @@ function CreateManga() {
                 <div className="item">
                   <Link
                     to={`/admin/ManageManga/CreateChapter/${mangaId}`}
+                    state={{ mangaName: mangaName }}
                     type="button"
                     className="btn btn-success"
                     title="Thêm chương"
